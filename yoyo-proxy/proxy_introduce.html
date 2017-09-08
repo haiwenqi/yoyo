@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+		<meta name="screen-orientation" content="portrait" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-fullscreen" content="true">
+		<title>招募代理人</title>
+		<style type="text/css">
+			
+			html, body, address, div,form,input,textarea,button,select, h1, h2, h3, h4, h5, h6, p, ul,ol,li,dd,dt,dl,tbody,table,td,tr,th,thead,tfoot,a, em, i, img,span,strong,sub,sup{
+			    margin: 0;
+			    padding: 0;
+			    font-family:"Microsoft YaHei", "微软雅黑",Arial, Georgia, "Times New Roman",STXihei, "华文细黑",sans-serif;
+			    -ms-text-size-adjust: 100%;
+			    -webkit-text-size-adjust: 100%;
+			    text-transform: none;
+			}
+			ul,li{list-style:none;}
+			a{text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);cursor:pointer;}
+			a:active,a:hover {outline: none;}
+			img{border:none;vertical-align:top; max-width:100%;width:100%; -ms-interpolation-mode: bicubic;}
+			.clear{zoom:1;}
+			.clear:after,.clear:before{content:"";display:block;clear:both;line-height:0;width: 0;height: 0;visibility:hidden;}
+			.fl{float:left;}
+			.fr{float:right;}
+			
+			/*==============*/
+			body{
+				
+			}
+			.wrapper{
+				width: 18rem;
+				/*height: 31rem;*/
+				position: relative;
+				/*background: url(img/proxy_bg2.png) center center no-repeat;
+				background-size: cover;
+				-webkit-background-size: cover;*/
+			}
+			.txtGroup{
+				/*padding-top:13rem;*/
+				text-align: center;
+				color: #e9c265;
+				position: absolute;
+				/*top: 13.5rem;*/
+				top: 12.5rem;
+				left: 2.15rem;
+			}
+			.txtGroup h2{
+				font-size: 0.75rem;
+				font-weight: normal;
+				padding-bottom:0.3rem ;
+			}
+			.txtGroup p{
+				font-size:0.6rem;
+				line-height: 0.95rem;
+				padding-bottom:0.55rem ;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div class="wrapper">
+			<img src="img/proxy_bg2.png"/>
+			<div class="txtGroup">
+				<h2>【代理人介绍】</h2>
+				<p>代理人通过分享软件给好友，能够得到平台的奖励，<br />分享的越多，得到的越多。</p>
+				<h2>【操作步骤】</h2>
+				<p>1.联系商务合作；2.待申请通过后，分享软件给好友；<br />3.注册成功后填写邀请码即可。</p>
+				<h2>【代理人合作】</h2>
+				<p>QQ:1947860445</p>
+			</div>
+		</div>
+
+		<script type="text/javascript">
+		    function fontSize(doc, win,fontSize,baseSize) {
+		        var docEl = doc.documentElement,
+		        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+		        recalc = function () {
+		         
+				  var clientWidth = docEl.clientWidth;
+		          if (!clientWidth) return;
+		          docEl.style.fontSize = fontSize * (clientWidth / baseSize) + 'px';		
+				};
+		
+		      if (!doc.addEventListener) return;
+		      win.addEventListener(resizeEvt, recalc, false);
+		      doc.addEventListener('DOMContentLoaded', recalc, false);
+		    }
+		    
+			var ua=navigator.userAgent.toLowerCase();
+			if (/android (\d+\.\d+)/.test(ua)) {
+				//安卓手机
+				fontSize(document,window,20,360);
+			} else if(ua.indexOf('iphone') > -1){
+				//苹果手机
+				fontSize(document,window,20.8333,375);	
+			}
+
+		</script>
+	</body>
+</html>

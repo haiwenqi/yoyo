@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8" />
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
 		<meta name="screen-orientation" content="portrait" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="format-detection" content="telephone=no">
 		<meta name="full-screen" content="yes">
 		<meta name="x5-fullscreen" content="true">
-		<title>招募代理人</title>
+		<title>没有交易记录</title>
 		<style type="text/css">
-			
 			html, body, address, div,form,input,textarea,button,select, h1, h2, h3, h4, h5, h6, p, ul,ol,li,dd,dt,dl,tbody,table,td,tr,th,thead,tfoot,a, em, i, img,span,strong,sub,sup{
 			    margin: 0;
 			    padding: 0;
@@ -27,54 +26,41 @@
 			.clear:after,.clear:before{content:"";display:block;clear:both;line-height:0;width: 0;height: 0;visibility:hidden;}
 			.fl{float:left;}
 			.fr{float:right;}
+			/*<!--禁止用户选中-->*/
+			.user-select-none {
+		    -webkit-user-select: none;  
+		    -moz-user-select: none;     
+		    -ms-user-select: none;
+		    } 
+		    /*=====================*/
+		    body{
+				background: #f8f8fc;
+				letter-spacing: 1px;
+			}
 			
-			/*==============*/
-			body{
-				
-			}
-			.wrapper{
-				width: 18rem;
-				/*height: 31rem;*/
-				position: relative;
-				/*background: url(img/proxy_bg2.png) center center no-repeat;
-				background-size: cover;
-				-webkit-background-size: cover;*/
-			}
-			.txtGroup{
-				/*padding-top:13rem;*/
+			.noRecord{
+				padding-top: 10.5rem;
 				text-align: center;
-				color: #e9c265;
-				position: absolute;
-				/*top: 13.5rem;*/
-				top: 12.5rem;
-				left: 2.15rem;
 			}
-			.txtGroup h2{
-				font-size: 0.75rem;
-				font-weight: normal;
-				padding-bottom:0.3rem ;
+			.noRecord img{
+				width: 8.75rem;
+				height: 4.75rem;
+				padding-bottom: 1rem;
 			}
-			.txtGroup p{
-				font-size:0.6rem;
-				line-height: 0.95rem;
-				padding-bottom:0.55rem ;
-				
+			.noRecord p{
+				font-size: 0.6rem;
+				color: #666;
 			}
 		</style>
 	</head>
 	<body>
-		<div class="wrapper">
-			<img src="img/proxy_bg2.png"/>
-			<div class="txtGroup">
-				<h2>【代理人介绍】</h2>
-				<p>代理人通过分享软件给好友，能够得到平台的奖励，<br />分享的越多，得到的越多。</p>
-				<h2>【操作步骤】</h2>
-				<p>1.联系商务合作；2.待申请通过后，分享软件给好友；<br />3.注册成功后填写邀请码即可。</p>
-				<h2>【代理人合作】</h2>
-				<p>QQ:1947860445</p>
-			</div>
+		<!--没有 交易记录时显示-->
+		<div class="noRecord">
+			<img src="img/noRecord.png"/>
+			<p>您还没有记录</p>
 		</div>
-
+		
+		
 		<script type="text/javascript">
 		    function fontSize(doc, win,fontSize,baseSize) {
 		        var docEl = doc.documentElement,

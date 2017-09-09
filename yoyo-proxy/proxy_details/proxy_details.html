@@ -26,6 +26,12 @@
 			.clear:after,.clear:before{content:"";display:block;clear:both;line-height:0;width: 0;height: 0;visibility:hidden;}
 			.fl{float:left;}
 			.fr{float:right;}
+			/*<!--禁止用户选中-->*/
+			.user-select-none {
+			  -webkit-user-select: none;  
+			  -moz-user-select: none;     
+			  -ms-user-select: none;            
+			}
 			/*================*/
 			body{
 				background: #f8f8fc;
@@ -54,13 +60,21 @@
 				background: #fff;
 				position: relative;
 			}
+			/*默认头像*/
 			.headerImg{
+				background: url(img/defaultHeader.png) center center no-repeat;
+				background-size:contain ;
+				-webkit-background-size: contain;
 				float: left;
 				width: 2.75rem;
 				height: 2.75rem;
+				margin-right: 0.5rem;
 				border-radius: 1.375rem;
 				-webkit-border-radius: 1.375rem;
-				margin-right: 0.5rem;
+			}
+			.headerImg img{
+				border-radius: 1.375rem;
+				-webkit-border-radius: 1.375rem;
 			}
 			.cell ul{
 				float: left;
@@ -69,20 +83,25 @@
 				vertical-align: middle;
 			}
 			.nickname{
+				vertical-align: middle;
 				font-size: 0.8rem;
 				color: #333;
 			}
 			.age{
-				margin: 0 0.4rem;
+				display: inline-block;
+				height: 0.8rem;
+				line-height:0.92rem;
+				margin: 0 0.15rem;
+				padding-left: 0.6rem;
+				padding-right: 0.08rem;
 				font-size: 0.5rem;
 				color: #fff;
-				padding: 0.1rem 0.15rem;
-				padding-left: 0.55rem;
+				vertical-align: middle;
 				border-radius:0.1rem;
 				-webkit-border-radius: 0.1rem;
 			}
 			.male{
-				background:url(img/male_icon.png) left center no-repeat #3c76f9;
+				background:url(img/male_icon.png) 0.08rem center no-repeat #3c76f9;
 				background-size: 0.5rem 0.5rem;
 			}
 			.female{
@@ -90,10 +109,14 @@
 				background-size: 0.5rem 0.5rem;
 			}
 			.vip{
-				font-size: 0.5rem;
-				color: #fff;
+				display: inline-block;
+				height: 0.8rem;
+				line-height:0.92rem;
+				padding: 0 0.2rem;
 				background: #ffcd05;
-				padding: 0.1rem 0.25rem;
+				color: #fff;
+				font-size: 0.5rem;
+				vertical-align: middle;
 				border-radius:0.1rem;
 				-webkit-border-radius: 0.1rem;
 			}
@@ -123,15 +146,20 @@
 			</div>
 			<!--循环体-->
 			<div class="cell clear">
-				<img src="img/wx.png" class="headerImg"/>
+				<div class="headerImg"><img src="img/wx.png"/></div> <!--头像-->
 				<ul>
-					<li class="info"><span class="nickname">素雅</span><span class="age male">24</span><span class="vip">VIP</span></li>
+					<li class="info">
+						<span class="nickname">素雅</span>
+						<!--<span class="age male">24</span>--><!--男：male-->
+						<span class="age female">24</span><!--女：female-->
+						<span class="vip">VIP</span>
+					</li>
 					<li class="hour-long">已成功订单一笔&nbsp;&nbsp;时长：<span>1小时</span></li>
 					<li class="profit">分成<span>80</span>元</li>
 				</ul>
 				<p class="time">2017-09-07-13:23</p>
 			</div>
-			
+			<!--循环体结束-->
 		</div>
 		
 		<script type="text/javascript">

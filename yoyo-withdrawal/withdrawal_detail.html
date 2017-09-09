@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+		<meta name="screen-orientation" content="portrait" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="full-screen" content="yes">
+		<meta name="x5-fullscreen" content="true">
+		<title>提现记录</title>
+		<style type="text/css">
+			html, body, address, div,form,input,textarea,button,select, h1, h2, h3, h4, h5, h6, p, ul,ol,li,dd,dt,dl,tbody,table,td,tr,th,thead,tfoot,a, em, i, img,span,strong,sub,sup{
+			    margin: 0;
+			    padding: 0;
+			    font-family:"Microsoft YaHei", "微软雅黑",Arial, Georgia, "Times New Roman",STXihei, "华文细黑",sans-serif;
+			    -ms-text-size-adjust: 100%;
+			    -webkit-text-size-adjust: 100%;
+			    text-transform: none;
+			}
+			ul,li{list-style:none;}
+			a{text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);cursor:pointer;}
+			a:active,a:hover {outline: none;}
+			img{border:none;vertical-align:top; max-width:100%;width:100%; -ms-interpolation-mode: bicubic;}
+			.clear{zoom:1;}
+			.clear:after,.clear:before{content:"";display:block;clear:both;line-height:0;width: 0;height: 0;visibility:hidden;}
+			.fl{float:left;}
+			.fr{float:right;}
+			/*<!--禁止用户选中-->*/
+			.user-select-none {
+			  -webkit-user-select: none;  
+			  -moz-user-select: none;     
+			  -ms-user-select: none;            
+			}
+			/*===================*/
+			body{
+				background: #f8f8fc;
+			}
+			.cell{
+				padding: 0.75rem 0.6rem;
+				position: relative;
+				border-bottom: 1px solid #ddd;
+			}
+			
+			.result{
+				font-size: 0.8rem;
+				color: #333;
+				padding-bottom: 0.5rem;
+			}
+			.all{
+				font-size: 0.65rem;
+				color: #666;
+				padding-bottom: 0.5rem;
+			}
+			.source{
+				font-size: 0.65rem;
+				color: #999;
+			}
+			
+			.time{
+				padding-top: 0.15rem;
+				font-size: 0.6rem;
+				color: #999;
+				padding-bottom:1.15rem;
+			}
+			.state{
+				font-size: 0.75rem;
+				text-align: right;
+			}
+			
+			/*===========*/
+			.success{
+				color: #ffcd05;
+			}
+			.wait{
+				color: #3c76f9;
+			}
+			.reject{
+				color: #FF5771;
+			}
+		</style>
+	</head>
+	<body>
+		<!--循环体开始-->
+		<div  class="cell clear">
+			<div class="record fl">
+				<p class="result"><span>1600</span>元</p>
+				<p class="all">扣除20%税，实得1600元</p>
+				<p class="source">支付宝</p> <!--提现 去处-->
+			</div>
+			<div class="state fr">
+				<p class="time">2017-09-19  13:00</p>
+				<p class="success">已结算</p> <!--"已结算" --success--黄色-->
+				<!--<p class="wait">审核中</p>--> <!--"审核中"--wait--蓝色-->
+				<!--<p class="reject">被拒绝</p>--> <!--"被拒绝"--reject--红色-->
+			</div>
+		</div>
+		<!--循环体结束-->
+		
+		<script type="text/javascript">
+		    function fontSize(doc, win,fontSize,baseSize) {
+		        var docEl = doc.documentElement,
+		        resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+		        recalc = function () {
+		         
+				  var clientWidth = docEl.clientWidth;
+		          if (!clientWidth) return;
+		          docEl.style.fontSize = fontSize * (clientWidth / baseSize) + 'px';		
+					};
+			
+			      if (!doc.addEventListener) return;
+			      win.addEventListener(resizeEvt, recalc, false);
+			      doc.addEventListener('DOMContentLoaded', recalc, false);
+			    }
+			    
+				var ua=navigator.userAgent.toLowerCase();
+				if (/android (\d+\.\d+)/.test(ua)) {
+					//安卓手机
+					fontSize(document,window,20,360);
+				} else if(ua.indexOf('iphone') > -1){
+					//苹果手机
+					fontSize(document,window,20.8333,375);	
+				}
+	
+			</script>
+	</body>
+</html>

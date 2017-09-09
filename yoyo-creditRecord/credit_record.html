@@ -26,6 +26,12 @@
 			.clear:after,.clear:before{content:"";display:block;clear:both;line-height:0;width: 0;height: 0;visibility:hidden;}
 			.fl{float:left;}
 			.fr{float:right;}
+			/*<!--禁止用户选中-->*/
+			.user-select-none {
+			  -webkit-user-select: none;  
+			  -moz-user-select: none;     
+			  -ms-user-select: none;            
+			}
 			/*===================*/
 			body{
 				background: #f8f8fc;
@@ -33,6 +39,7 @@
 			.cell{
 				padding: 0.75rem 0.6rem;
 				position: relative;
+				border-bottom: 1px solid #ddd;
 			}
 			.number{
 				font-size: 0.8rem;
@@ -43,17 +50,23 @@
 				font-size: 0.65rem;
 				color: #999;
 			}
+			.time{
+				font-size: 0.6rem;
+				color: #999;
+				float: right;
+			}
 		</style>
 	</head>
 	<body>
-		<div  class="cell">
-			<div class="record">
+		<!--循环体开始-->
+		<div  class="cell clear">
+			<div class="record fl">
 				<p class="number"><span>+3</span>信用分</p>
-				<p class="reason">好评加分</p>
+				<p class="reason">好评加分</p> <!--加减分理由-->
 			</div>
 			<p class="time">2017-09-19  13:00</p>
 		</div>
-		
+		<!--循环体结束-->
 		
 		<script type="text/javascript">
 		    function fontSize(doc, win,fontSize,baseSize) {

@@ -2,8 +2,8 @@
   <div id="app">
     
 		<mt-navbar v-model="activeTab" fixed>
-		  <mt-tab-item id="attention"><router-link to="/dyList/attention">关注</router-link></mt-tab-item>
-		  <mt-tab-item id="newest"><router-link to="/dyList/newest">最新</router-link></mt-tab-item>
+		  <mt-tab-item id="attention">关注</mt-tab-item>
+		  <mt-tab-item id="newest">最新</mt-tab-item>
 		  <mt-button class="addBtn" plain @click="sheetVisible=true"></mt-button>
 		</mt-navbar>
 		
@@ -11,18 +11,18 @@
 		
    	<mt-tab-container v-model="activeTab" swipeable>
    		
-   		<mt-tab-container-item :id="activeTab">
+   		<mt-tab-container-item id="attention">
 	   		<mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore" @top-status-change="handleTopStatusChange">
-	   				{{activeTab}}
-	   				<router-view></router-view>
-	   			  
+   				
+   				<MainBox :activeTab="activeTab"></MainBox>
+	   		  
 	   		</mt-loadmore>
 		  </mt-tab-container-item>
 		  
-		  <!--<mt-tab-container-item id="newest">
+		  <mt-tab-container-item id="newest">
 		    <mt-loadmore :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadComponent" @top-status-change="handleTopStatusChange">
-   				{{activeTab}}
-   				<router-view></router-view>
+   				
+   				<MainBox :activeTab="activeTab"></MainBox>
    				
    				<div slot="top" class="mint-loadmore-top">
 			      <span v-show="topStatus !== 'loading'" :class="{ 'rotate': topStatus === 'drop' }">↓</span>
@@ -30,7 +30,7 @@
 			    </div>
 			    
 	   		</mt-loadmore>
-		  </mt-tab-container-item>-->
+		  </mt-tab-container-item>
 		  
 		</mt-tab-container>
 		
@@ -43,7 +43,9 @@
 
 <script>
 
+import MainBox from './components/mainBox'
 export default {
+	
   name: 'app',
   data(){
   	return{
@@ -61,6 +63,9 @@ export default {
   		
   	}
   },
+  components:{
+  	MainBox
+  },
   methods:{
   	loadTop(){
   	 this.$http.jsonp('http://3g.163.com/touch/jsonp/sy/recommend/0-9.html',{
@@ -68,7 +73,7 @@ export default {
         refresh: 'B03'
   	 	 
   	 }).then(data => {
-				this.dyList.list = data.body.list.filter(item => {
+				let dyList = data.body.list.filter(item => {
 					return item.addata == null 
 				}).map(item => {
 					return {
@@ -85,7 +90,9 @@ export default {
 						mediaType:"picture",
 						media:['../../static/wx.png','../../static/wx.png','../../static/wx.png','../../static/wx.png',]
 					}
-				})
+				});
+				
+				console.log(dyList)
 			});
   	},
   	loadBottom(){
@@ -112,39 +119,33 @@ export default {
 	@import url("styles/reset.css");
 	
 	body{
-	
+		
 	}
 	.mint-navbar{
-		width: 100%;
-		background: #ff2b5e;
-		color: #fff;
+		background: #fff;
+		color: #333;
 		height: 2.4rem;
-		display: block !important;
 		
 		.mint-tab-item{
-			padding-top:0.75rem;
-			padding-bottom:0.25rem;
-			width: 1.7rem;
-			float: left;
-			
-			
-			&:nth-child(1){
-				margin-left: 7.2rem;
-				margin-right: 0.625rem;
-			}
-			&:nth-child(2){
-				margin-left: 0.625rem;
-			}
+			padding:0;
 			
 			.mint-tab-item-label{
 				font-size: 16px;
+				line-height: 2.4rem;
+				a{
+					color: #333;
+				}
 			}
 		}
 		
 		.mint-tab-item.is-selected{
-			color: #fff;
-			border-bottom:0.1rem solid #fff;
+			
+			border-bottom:0.1rem solid #FF3B5E;
 			margin-bottom: 0;
+			
+			a{
+				color: #333;
+			}
 		}
 	}
 	

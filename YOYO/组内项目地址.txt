@@ -1,0 +1,8 @@
+后台项目
+ssh://git@gitlab.appleflying.com:2022/miai/shark-miai-manager.git
+
+服务端git
+ssh://git@gitlab.appleflying.com:2022/miai/shark-miai-service.git
+
+蜜爱接口文档存储git地址
+ssh://git@gitlab.appleflying.com:2022/livedocument/miliao.git

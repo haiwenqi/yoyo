@@ -2,6 +2,8 @@
 
 (ok)文字不可选中
 
+每页<head> position:fixed
+
 后台填数据 是拼接字符串 还是<span>隔开
 
 与客户端交互

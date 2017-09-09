@@ -1,6 +1,6 @@
 <template>
 	<div id="mainBox" class="mainBox">
-		<!--<p>{{ $route.params.tabName}}</p>-->
+		<p>{{activeTab}}</p>
 		<div v-for="(item,index) in initList.list" class="mainBox_item">
 			
 			<mt-cell>
@@ -70,10 +70,7 @@
 	export default {
 		name:"mainBox",
 		mounted(){
-			this.$http.jsonp('http://3g.163.com/touch/jsonp/sy/recommend/0-9.html',{
-				miss:"26",
-				refresh:"A"
-			}).then(data => {
+			this.$http.jsonp('http://3g.163.com/touch/jsonp/sy/recommend/0-9.html').then(data => {
 				console.log(data.body);
 				
 				this.initList.list = data.body.list.filter(item => {
@@ -91,12 +88,12 @@
 						wcount:item.tcount,
 						lcount:item.imgsrc3gtype,
 						mediaType:"picture",
-						media:['../../static/wx.png','../../static/wx.png','../../static/wx.png','../../static/wx.png',]
+						media:['../../static/wx.png','../../static/wx.png','../../static/wx.png',]
 					}
 				})
 			});
 		},
-		props:['refeshData'],
+		props:['activeTab'],
 		data(){
 			return{
 				initList:{
@@ -106,9 +103,7 @@
 			}
 		},
 		computed:{
-			getRefeshData(){
-				return this.initList
-			}
+			
 		},
 		methods:{
 			
@@ -152,7 +147,7 @@
 	}
 	.justify-content(@justify:center){
 	    /* 09版 */
-	    -webkit-box-pack: @justify;//(主轴为横轴时使用)
+	    -webkit-box-pack: @justify;/*(主轴为横轴时使用)*/
 	    /* 12版 */
 	    -webkit-justify-content: @justify;
 	    -moz-justify-content: @justify;

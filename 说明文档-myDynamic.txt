@@ -1,0 +1,40 @@
+nodeJS 版本：v8.4.0
+npm 版本：v5.3.0
+webpack 版本 @3.5.5
+vue 版本 @2.8.2
+
+1、npm install vue
+   
+   npm install -g vue
+
+2、npm install --global vue-cli
+
+3、npm install -g webpack
+
+4、npm install mint-ui -S
+
+5、npm install babel-plugin-component --save-dev  按需引入 (可卸载)
+
+6、npm install --save fastclick  --移动端点击过快 优化插件
+
+7、npm i vue-scroller -S  (可卸载)
+
+8、npm install vue-resource  支持jsonp请求
+   
+   npm i -S vue-jsonp (可卸载)
+
+9、npm install vuex --save  状态管理 (可卸载)
+
+10、npm install less less-loader --save-dev 
+======================================================
+20170904
+待解决问题：
+
+1、提高兼容性
+
+flex-兼容到安卓4.4
+rem-兼容到安卓4.4
+
+2、首屏加载 loading
+
+3、循环列表唯一标识 列表顺序变化 此条index也会变化

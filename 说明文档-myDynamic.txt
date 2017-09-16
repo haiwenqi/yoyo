@@ -26,6 +26,8 @@ vue 版本 @2.8.2
 9、npm install vuex --save  状态管理 (可卸载)
 
 10、npm install less less-loader --save-dev 
+
+11、jquery (可卸载)
 ======================================================
 20170904
 待解决问题：
@@ -38,3 +40,7 @@ rem-兼容到安卓4.4
 2、首屏加载 loading
 
 3、循环列表唯一标识 列表顺序变化 此条index也会变化
+
+4、无法删除最后一个
+
+5、load-more 刷到nextpage == false时 返回的stamp==0；此时就成了加载新数据

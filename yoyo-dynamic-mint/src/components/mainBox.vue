@@ -1,13 +1,13 @@
 <template>
 	<div id="mainBox" class="mainBox">
-		<p>{{activeTab}}</p>
+<!--		<p>{{activeTab}}</p>-->
 		<div v-for="(item,index) in initList.list" class="mainBox_item">
 			
 			<mt-cell>
 			  <span class="time">{{item.time}}</span>
 			  <img slot="icon" :src="item.headImgUrl" class="headerImg">
 			  <div slot="title" class="information">
-			  	<span>{{item.nickname}}</span><span :class="item.sex == 'male' ?'male':'female'" class="age">{{item.age}}</span><span class="vip" v-if="item.isVIP">VIP</span>
+			  	<span>{{item.nickname}}</span><span :class="item.sex == 'male' ?'male':'female'" class="age">{{item.age}}</span>
 			  	<p class="signature">{{item.signature}}</p>
 			  </div>
 			  
@@ -24,15 +24,15 @@
 				<div v-if="item.mediaType == 'video'" class="media">
 					<div v-for="mediaUrl in item.media" class="media_item">
 						<img :src="mediaUrl"/>
-						<img src="../../static/video_play_btn.png" class="video_play_btn"/>
+						<img src="../../static/img/video_play_btn.png" class="video_play_btn"/>
 					</div>
 				</div>
 				
 			</div>
 			
 			<mt-cell>
-			  <span class="like"><img src="../../static/unlike.png"/>{{item.lcount}}</span>
-			  <img src="../../static/watch_icon.png" slot="icon" class="watch_icon"><span slot='title' class="watch_count">{{item.wcount}}</span>
+			  <span class="like"><img src="../../static/img/unlike.png"/>{{item.lcount}}</span>
+			  <img src="../../static/img/watch_icon.png" slot="icon" class="watch_icon"><span slot='title' class="watch_count">{{item.wcount}}</span>
 			  
 		    </mt-cell>
 		    
@@ -88,7 +88,7 @@
 						wcount:item.tcount,
 						lcount:item.imgsrc3gtype,
 						mediaType:"picture",
-						media:['../../static/wx.png','../../static/wx.png','../../static/wx.png',]
+						media:['../../static/img/wx.png','../../static/img/wx.png','../../static/img/wx.png',]
 					}
 				})
 			});
@@ -186,11 +186,10 @@
 	}
 	.headerImg{
 		float: left;
-		.wh(2.75rem,2.75rem);
+		.wh(3rem,3rem);
 		padding-top: 0.4rem;
 		padding-left: 0.25rem;
 		padding-right: 0.5rem;
-		.borderRadius(1.375rem);
 	}
 	
 	.information{
@@ -214,11 +213,11 @@
 			
 		}
 		.male{
-			background:url(../../static/male_icon.png) left center no-repeat #3c76f9;
+			background:url(../../static/img/male_icon.png) left center no-repeat #3c76f9;
 			background-size: 0.55rem 0.55rem;
 		}
 		.female{
-			background:url(../../static/female_icon.png) left center no-repeat #ff3b5e;
+			background:url(../../static/img/female_icon.png) left center no-repeat #ff3b5e;
 			background-size: 0.55rem 0.55rem;
 		}
 		

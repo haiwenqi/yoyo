@@ -7,7 +7,6 @@ import 'mint-ui/lib/style.css'
 import FastClick from 'fastclick'
 import VueResource from 'vue-resource'
 import './utils/rem'
-//import './utils/getDataList'
 
 Vue.use(MintUI);
 Vue.use(VueResource);

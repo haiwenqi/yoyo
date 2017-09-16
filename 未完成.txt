@@ -8,6 +8,15 @@
 
 与客户端交互
 
+单独提出 getDataList 方法
+
+请求数据前loading 
+
+加载了多少条
+
+firstLoaded/allLoaded/nextPage未设置
+
+苹果手机 弹性滑动回弹
 =====================================================
 制作圆角：border-radius==1/2(width),width==height
 

@@ -13,34 +13,35 @@
 			//播放一组图片  key：imageArray value: 图片数组
 			function showImages() {
 				var dic = {
-						'imageArray': ["http://pic35.nipic.com/20131104/12954233_100827450197_2.jpg 
+					'imageArray': ["http://pic35.nipic.com/20131104/12954233_100827450197_2.jpg",
+									"http://pic35.nipic.com/20131104/12954233_100827450197_2.jpg",
+									"http://www.taopic.com/uploads/allimg/140326/235113-1403260G01561.jpg"
+									],
+					'index': 2
+					};
 
-							",
-							"http://pic35.nipic.com/20131104/12954233_100827450197_2.jpg 
+					  window.webkit.messageHandlers.showImages.postMessage(dic);
 
-							",
-							"http://www.taopic.com/uploads/allimg/140326/235113-1403260G01561.jpg 
 
-							"]};
-							
-						}
-				window.webkit.messageHandlers.showImages.postMessage(dic);
-						
-			}
-			//显示视频 key:videoUrl value:视频地址
-			function showVideo() {
-				var dic = {"videoUrl": "http://192.168.20.30/v/t/2016/12/30/1483062337134_241.mp4"}
-				window.webkit.messageHandlers.showVideo.postMessage(dic);
-			}
-			
-		 	function jsToOC(){
-                var array = [1,2,3,4,5];
-                var str = "hello world";
-                messageBody = {"array":array,"str":str};
-                window.webkit.messageHandlers.testJS.postMessage(messageBody);
-                alert("已执行");
-            }
+				}
+				//显示视频 key:videoUrl value:视频地址
+				function showVideo() {
+					var dic = {
+						"videoUrl": "http://192.168.20.30/v/t/2016/12/30/1483062337134_241.mp4"
+					}
+					window.webkit.messageHandlers.showVideo.postMessage(dic);
+				}
 
+				function jsToOC() {
+					var array = [1, 2, 3, 4, 5];
+					var str = "hello world";
+					messageBody = {
+						"array": array,
+						"str": str
+					};
+					window.webkit.messageHandlers.testJS.postMessage(messageBody);
+					alert("已执行");
+				}
 		</script>
 
 	</head>

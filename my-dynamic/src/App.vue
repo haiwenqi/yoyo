@@ -1,12 +1,14 @@
+<!--我的动态-->
 <template>
 	<div id="app">
 		<mt-header fixed title="我的动态">
 			<mt-button slot="left" icon="back" @click="gotoAppBack"></mt-button>
 			<mt-button slot="right" @click="addSheetVisible = true">+</mt-button>
 		</mt-header>
-
-		<div :style="{'-webkit-overflow-scrolling': scrollMode}">
-			<mt-loadmore ref="loadmore" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" @top-status-change="handleTopStatusChange" auto-fill="false" bottom-pull-text="加载更多">
+		
+		<div :style="{'-webkit-overflow-scrolling': scrollMode}" style="margin-top: 2.4rem;">
+			<p class="loading" v-show="isLoading">加载中...</p>
+			<mt-loadmore ref="loadmore" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" auto-fill="false" bottom-pull-text="加载更多">
 				<!--循环体-->
 				<div class="cell clear" v-for="(item,index) in dyList.data" :key="index">
 					<!--头像，昵称等部分 cell_top-->
@@ -15,7 +17,7 @@
 						<!--头像-->
 						<ul class="info">
 							<li>
-								<span class="nickname">{{item.nickname}}</span>
+								<span class="nickname">{{item.nickname | formatenickname}}</span>
 								<span class="age" :class="item.sex == 'male' ?'male':'female'">{{item.age}}</span>
 								<span class="vip" v-show="item.vip">VIP</span>
 							</li>
@@ -28,7 +30,7 @@
 					<div class="cell_center">
 						<p class="title">{{item.content}}</p>
 						<div v-if="item.type == 1" class="media">
-							<div v-for="mediaUrl in item.paths" class="media_item" @click='appshowImg(item.paths,item.id)'>
+							<div v-for="(mediaUrl,index) in item.paths" class="media_item" @click='appshowImg(item.paths,item.id,index)'>
 								<img :src="mediaUrl" />
 							</div>
 						</div>
@@ -49,6 +51,14 @@
 				</div>
 				<!--循环体结束-->
 			</mt-loadmore>
+			<p class="noMoreLine" v-if='dyList.data.length != 0 && this.allLoaded'>我是有底线的</p>
+			<!--请求成功 且 没有数据时 显示“没有动态”-->
+			<div  v-if="dyList.data.length <= 0 && this.isLoading == false">
+				<div class="noRecord">
+					<img src="../static/img/no_dynamic.png" />
+					<p>没有动态</p>
+				</div>
+			</div>
 		</div>
 		<!--删除动态组件-->
 		<mt-actionsheet :actions="delActions" v-model="delSheetVisible" cancelText="取消">
@@ -60,80 +70,40 @@
 </template>
 
 <script>
-	let requestUrl = "list";
-	let addaudienceRequestUrl = 'addaudience';
-	let deleteRequestUrl = 'delete';
-	let dyList = {
+	var requestUrl = "list";
+	var addaudienceRequestUrl = 'addaudience';
+	var deleteRequestUrl = 'delete';
+	var dyList = {
 		code: 0,
-		codemsg: 'success',
+		codemsg: '',
 		stamp: 0,
 		nextPage: true,
-		data: [{
-			id: 0,
-			nickname: '',
-			photo: '',
-			signature: '',
-			sex: "male",
-			age: 0,
-			vip: true,
-			date: '',
-			content: '',
-			type: 1,
-			paths: [],
-			video: "",
-			foreground: '',
-			audience_count: 0
-		}]
+		data: []
 	};
-	let itemIndex = 0;
-	let itemId = 0;
-	let userid = 1468676853399808;
+	var itemIndex = 0;
+	var itemId = 0;
 	var ua = navigator.userAgent.toLowerCase();
 	var mobileType = '';
-	//=======================================
-
-	//与安卓端接口
-	//1、页面返回
-	function gotoAppBackAndriod() {
-		window.target.action(1); //返回
+	
+	//从安卓端获取用户信息
+	function updateUserInfo(str) {
+		var res = JSON.parse(str);
+		var res_userInfo = JSON.parse(res.userinfo);
 	}
-	//2、发布动态 mode 0 图片； 1 视频
-	function dynamicPublishAndriod(mode) {
-		window.target.DynamicPublicFragment(userid, mode);
+	//测试
+//	function setColor(color){
+//		alert('调用了');
+//		var obj = document.getElementById("test");
+//		obj.style.backgroundColor  = color;
+//	}
+	//5、安卓端 用户“返回” 传更改信息给客户端
+	var timeInMs = Date.now();
+	function requestGoBack() {
+		window.target.setResultData("用户请求回退，并更新数据"+timeInMs);
+		window.target.action(1);
 	}
-	//3、跳转到个人主页
-	function gotoHomePageAndriod(mode) {
-		window.target.HomepageFragment(userid);
-	}
-
-	//与安卓端接口结束
-	//======================================
-	//与ios客户端接口
-
-	//1、页面返回
-	function gotoAppBackWebkit() {
-		window.webkit.messageHandlers.backPage.postMessage(0);
-	}
-
-	//2、查看图片
-	function showImagesWebkit() {
-		window.webkit.messageHandlers.showImages.postMessage({
-			'imageArray': dyList.paths
-		});
-	}
-
-	//3、观看视频
-	function showVideoWebkit() {
-		window.webkit.messageHandlers.showVideo.postMessage({
-			'videoUrl': dyList.video
-		});
-	}
-	//4、發佈動態　mode 1 圖片；2視頻
-	function dynamicPublishAndriod(mode) {
-		window.webkit.messageHandlers.issueMoment.postMessage(mode);
-	}
-	//与ios客户端接口结束
-
+	
+	
 	//分辨设备
 	function phoneType() {
 		if(/android (\d+\.\d+)/.test(ua)) {
@@ -150,21 +120,21 @@
 		name: 'app',
 		data() {
 			return {
+				isLoading: false,
 				allLoaded: false,
 				dyList: dyList,
-				topStatus: "",
 				scrollMode: "auto", //移动端弹性滚动效果，touch为弹性滚动，auto是非弹性滚动
 				delSheetVisible: false,
 				delActions: [{
 					name: "确认删除",
-					method: this.deleteDataListHttp
+					method: this.deleteDataListHttp  //发送服务端请求
 				}],
 				addSheetVisible: false,
 				addActions: [{
 						name: "图片动态",
 						method: function() {
 							if(mobileType == 'andorid') {
-								window.target.DynamicPublicFragment(userid, 0);
+								window.target.gotoAppPage('DynamicPublishFragment','{"strValue1":0}');
 							} else if(mobileType == 'iphone') {
 								window.webkit.messageHandlers.issueMoment.postMessage(1);
 							}
@@ -174,7 +144,7 @@
 						name: "视频动态",
 						method: function() {
 							if(mobileType == 'andorid') {
-								window.target.DynamicPublicFragment(userid, 1);
+								window.target.gotoAppPage('DynamicPublishFragment','{"strValue1":1}');
 							} else if(mobileType == 'iphone') {
 								window.webkit.messageHandlers.issueMoment.postMessage(2);
 							}
@@ -186,12 +156,28 @@
 		mounted() {
 			//初始化加载数据
 			this.getDataList(requestUrl, {
-				pagesize: 2,
+				pagesize: 0,
 				stamp: 0,
-				userid: userid,
 				type: 4
 			});
 
+		},
+		filters:{
+			//格式化昵称 第一个**最后一个
+			formatenickname(nickname){
+				var nickname_len = nickname.length;
+				var newNickname = '';
+				var firstName = '';
+				var lastName = '';
+				if(nickname_len > 4){
+					firstName = nickname.substring(0,1);
+					lastName = nickname.substr(nickname_len-1,1);
+					newNickname = firstName + '**' + lastName;
+				}else{
+					newNickname = nickname;
+				}
+				return newNickname;
+			}
 		},
 		methods: {
 			getDataList(ipUrl, params) {
@@ -199,15 +185,17 @@
 					method: "post",
 					url: ipUrl,
 					body: params,
-					before: function(req) {
+					headers: {
+						'header-encrypt-code' : httpHeader
+					},
+					before: function(xhr) {
 						//请求发送前  添加loading
-
+						this.isLoading = true
 					},
 					responseType: 'json',
 					emulateJSON: false
 				}).then(res => {
-					console.log(res);
-
+					this.isLoading = false;
 					dyList.stamp = res.body.stamp;
 					dyList.nextPage = res.body.nextPage;
 					//如果是初始化加载/刷新 res.body.data直接覆盖dyList.data 否则拼接
@@ -217,7 +205,7 @@
 						dyList.data = dyList.data.concat(res.body.data);
 					}
 
-					if(!res.body.nextPage) {
+					if(res.body.nextPage == false) {
 						this.allLoaded = true;
 					}
 
@@ -227,32 +215,55 @@
 						// 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好  
 						this.scrollMode = "touch";
 					});
-
+					alert(res.body.nextPage);
 				}).catch(function(error) {
 					console.log(error);
 				});
 			},
 			watchCountHttp(ipUrl, params) {
-				console.log('查看');
 				this.$http({
 					method: 'post',
 					body: params,
 					url: ipUrl,
+					headers: {
+						'header-encrypt-code': httpHeader
+					},
 					responseType: 'json',
 					emulateJSON: false
 				}).then(res => {
 					console.log(res);
 
 				}).catch(function(error) {
-					console.log("错误："+error);
+					console.log("错误：" + error);
 				});
 			},
+			deleteDataListHttp() {
+				this.$http({
+					method: 'post',
+					body: {
+						'dynamicId': itemId
+					},
+					url: deleteRequestUrl,
+					headers: {
+						'header-encrypt-code': httpHeader
+					},
+					responseType: 'json',
+					emulateJSON: false
+				}).then(res => {
+					console.log(res);
+
+				}).catch(function(error) {
+					console.log(error);
+				});
+
+				dyList.data.splice(itemIndex, 1);
+			},
 			loadTop() {
+				this.isLoading = false;//禁止额外"加载中"字样
 				//组件刷新动作
 				this.getDataList(requestUrl, {
-					pagesize: 2,
+					pagesize: 0,
 					stamp: 0,
-					userid: userid,
 					type: 4
 				});
 
@@ -265,9 +276,8 @@
 			loadBottom() {
 				//下拉加载更多
 				this.getDataList(requestUrl, {
-					pagesize: 2,
+					pagesize: 0,
 					stamp: dyList.stamp,
-					userid: userid,
 					type: 4
 				});
 
@@ -276,81 +286,74 @@
 				}, 500);
 
 			},
-			deleteBtn(index,id) {
+			deleteBtn(index, id) {
 				this.delSheetVisible = true;
 				itemIndex = index;
 				itemId = id;
 			},
 			gotoAppBack() {
 				if(mobileType == 'andorid') {
-					window.target.action(1);
+					requestGoBack();
 				} else if(mobileType == 'iphone') {
 					window.webkit.messageHandlers.backPage.postMessage(0);
 				}
 			},
-			appshowImg(img,id) {
+			appshowImg(imgArr, id, index) {
 				//请求 "观看数增加"接口
-//				this.watchCountHttp(addaudienceRequestUrl, {
-//					'dynamicId': id
-//				});
-//				var dic = {
+				alert('查看图片,' + typeof imgArr + "," + imgArr);
+				
+				this.watchCountHttp(addaudienceRequestUrl, {
+					'dynamicId': id
+				});
+				
+//					{
 //						'imageArray': ["http://pic35.nipic.com/20131104/12954233_100827450197_2.jpg",
 //										"http://pic35.nipic.com/20131104/12954233_100827450197_2.jpg",
 //										"http://www.taopic.com/uploads/allimg/140326/235113-1403260G01561.jpg"
-//										]
+//									  ],
+//						'index': 2
 //					};
+				var NumIndex = Number(index);
+				var imgListWebKit = {
+					'imageArray': imgArr,
+					'index':NumIndex
+				};
 
-				var imgList = img;
-				console.log(typeof imgList +":" + imgList);//["/path/test/1562.png", "/path/test/8956.png", __ob__: Eo]
-				
-				var dic = {
-						'imageArray': imgList
-					};
-			    
-				if(mobileType == 'andorid') {
-
-				} else if(mobileType == 'iphone') {
-					alert("查看图片");
-					window.webkit.messageHandlers.showImages.postMessage(dic);
+				var imgListAndroid = {
+					"strValue1": index,
+					"strValue2": imgArr
 				}
-				
+
+				if(mobileType == 'andorid') {
+					window.target.gotoAppPage('GalleryDialog', JSON.stringify(imgListAndroid));
+				} else if(mobileType == 'iphone') {
+					window.webkit.messageHandlers.showImages.postMessage(imgListWebKit);
+				}
+
 			},
-			appshowVideo(video,id) {
+			appshowVideo(video, id) {
+				alert('观看视频,' + typeof video + "," + video);
 				//请求 "观看数增加"接口
-//				this.watchCountHttp(addaudienceRequestUrl, {
-//					'dynamicId': id
-//				});
-				var videoUrl = video;
-				
-				console.log(typeof videoUrl +":" + videoUrl); //  /path/test/8956.png
-				
-				var dic2 = {"videoUrl": videoUrl}
-				
-				if(mobileType == 'andorid') {
+				this.watchCountHttp(addaudienceRequestUrl, {
+					'dynamicId': id
+				});
 
+				var videoWebkit = {
+					"videoUrl": video
+				}
+				var videoAndroid = {
+					"strValue1": video
+				}
+
+				if(mobileType == 'andorid') {
+					window.target.gotoAppPage('VideoPlayDlg', JSON.stringify(videoAndroid));
 				} else if(mobileType == 'iphone') {
-					alert("查看视频");
-					window.webkit.messageHandlers.showVideo.postMessage(dic2);
+					window.webkit.messageHandlers.showVideo.postMessage(videoWebkit);
 				}
 			},
-			deleteDataListHttp() {
-				console.log('删除');
-				this.$http({
-					method: 'post',
-					body: {
-						'dynamicId': itemId
-					},
-					url: deleteRequestUrl,
-					responseType: 'json',
-					emulateJSON: false
-				}).then(res => {
-					console.log(res);
-		
-				}).catch(function(error) {
-					console.log(error);
-				});
-				
-				dyList.data.splice(itemIndex, 1);
+			gotoTest(){
+				alert("跳转");
+				window.target.gotoAppPage('WebSingleSaveFragment','{"strValue1":"http://192.168.20.31:20000/shark-miai-service/api/dynamic/test"}');
 			}
 		}
 

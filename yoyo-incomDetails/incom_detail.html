@@ -103,7 +103,17 @@
 				}else{
 					fontSize(document,window,20,360);
 				}
-	
+				//安卓更新用户数据
+				function updateUserInfo(str) {
+					var res = JSON.parse(str);
+					var res_userInfo = JSON.parse(res.userinfo);
+				}
+				var timeInMs = Date.now();
+				//安卓 “返回” 
+				function requestGoBack() {
+					window.target.setResultData("用户请求回退，并更新数据"+timeInMs);
+					window.target.action(1);
+				}
 			</script>
 	</body>
 </html>

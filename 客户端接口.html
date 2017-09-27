@@ -1,0 +1,55 @@
+
+	//与安卓端接口
+	//1、页面返回
+	/*function gotoAppBackAndriod() {
+		window.target.action(1); //返回
+	}*/
+	//2、发布动态 mode 0 图片； 1 视频
+	/*function dynamicPublishAndriod(mode) {
+		window.target.gotoAppPage('DynamicPublishFragment','{"strValue1":0}');
+	}*/
+	/*3、安卓 跳转到个人主页
+	 * 
+	window.target.gotoAppPage('HomepageFragment','{"strValue1":"userid"}');*/
+
+	//4、查看图片
+	//strValue1: int  显示第几个图片 从0开始
+	//strValue2: 是 json的List<String>  图片列表
+	//window.target.gotoAppPage('GalleryDialog','{"strValue1":'',"strValue1":''}');
+	//5、查看视频
+	//strValue1: string  视频地址
+	//window.target.gotoAppPage('VideoPlayDlg','{"strValue1":''}');
+	//4、更新用户信息接口 
+	//接受到的str {
+	//header, --ajax请求头
+	//userinfo:{user(用户id),nickname,picture},
+	//resultData --B页面更改的数据
+	//    	}
+
+	//与安卓端接口结束
+	//======================================
+	//与ios客户端接口
+
+	//1、页面返回
+	/*function gotoAppBackWebkit() {
+		window.webkit.messageHandlers.backPage.postMessage(0);
+	}*/
+
+	//2、查看图片
+	/*function showImagesWebkit() {
+		window.webkit.messageHandlers.showImages.postMessage({
+			'imageArray': dyList.paths
+		});
+	}*/
+
+	//3、观看视频
+	/*function showVideoWebkit() {
+		window.webkit.messageHandlers.showVideo.postMessage({
+			'videoUrl': dyList.video
+		});
+	}*/
+	//4、发布动态　mode 1 图片；2视频
+	/*function dynamicPublishAndriod(mode) {
+		window.webkit.messageHandlers.issueMoment.postMessage(mode);
+	}*/
+	//与ios客户端接口结束

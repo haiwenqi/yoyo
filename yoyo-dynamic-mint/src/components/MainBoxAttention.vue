@@ -3,7 +3,7 @@
 		<div>
 			<p class="loading" v-show="isLoading">加载中...</p>
 			<div v-if='dyList.data.length > 0' :style="{'-webkit-overflow-scrolling': scrollMode}">
-				<mt-loadmore ref="loadmore" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" bottom-pull-text="加载更多">
+				<mt-loadmore ref="loadmore" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" bottom-pull-text="加载更多" top-loading-text="">
 
 					<!--循环体-->
 					<div class="cell clear" v-for="(item,index) in dyList.data" :key="item.id">
@@ -92,8 +92,9 @@
 		var res = JSON.parse(str);
 		var res_userInfo = JSON.parse(res.userinfo);
 	}
-	var timeInMs = Date.now();
+	
 	//5、用户“返回” 传更改信息给客户端
+	var timeInMs = Date.now();
 	function requestGoBack() {
 		window.target.setResultData("用户请求回退，并更新数据"+timeInMs);
 		window.target.action(1);
@@ -160,8 +161,11 @@
 						dyList.data = dyList.data.concat(res.body.data);
 					}
 
-					if(!res.body.nextPage) {
+					
+					if(res.body.nextPage == false) {
 						this.allLoaded = true;
+					}else{
+						this.allLoaded = false;
 					}
 
 					this.$nextTick(function() {

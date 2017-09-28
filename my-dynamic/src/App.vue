@@ -17,7 +17,7 @@
 						<!--头像-->
 						<ul class="info">
 							<li>
-								<span class="nickname">{{item.nickname | formatenickname}}</span>
+								<span class="nickname">{{item.nickname}}</span>
 								<span class="age" :class="item.sex == 'male' ?'male':'female'">{{item.age}}</span>
 								<span class="vip" v-show="item.vip">VIP</span>
 							</li>
@@ -90,12 +90,6 @@
 		var res = JSON.parse(str);
 		var res_userInfo = JSON.parse(res.userinfo);
 	}
-	//测试
-//	function setColor(color){
-//		alert('调用了');
-//		var obj = document.getElementById("test");
-//		obj.style.backgroundColor  = color;
-//	}
 	//5、安卓端 用户“返回” 传更改信息给客户端
 	var timeInMs = Date.now();
 	function requestGoBack() {
@@ -162,23 +156,7 @@
 			});
 
 		},
-		filters:{
-			//格式化昵称 第一个**最后一个
-			formatenickname(nickname){
-				var nickname_len = nickname.length;
-				var newNickname = '';
-				var firstName = '';
-				var lastName = '';
-				if(nickname_len > 4){
-					firstName = nickname.substring(0,1);
-					lastName = nickname.substr(nickname_len-1,1);
-					newNickname = firstName + '**' + lastName;
-				}else{
-					newNickname = nickname;
-				}
-				return newNickname;
-			}
-		},
+		
 		methods: {
 			getDataList(ipUrl, params) {
 				this.$http({
@@ -205,8 +183,11 @@
 						dyList.data = dyList.data.concat(res.body.data);
 					}
 
+					
 					if(res.body.nextPage == false) {
 						this.allLoaded = true;
+					}else{
+						this.allLoaded = false;
 					}
 
 					this.$nextTick(function() {
@@ -215,7 +196,7 @@
 						// 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好  
 						this.scrollMode = "touch";
 					});
-					alert(res.body.nextPage);
+					
 				}).catch(function(error) {
 					console.log(error);
 				});

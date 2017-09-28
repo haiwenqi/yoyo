@@ -6,7 +6,7 @@
 		<div style="margin-top: 2.4rem;">
 			<p class="loading" v-show="isLoading">加载中...</p>
 			<div v-if='dyList.data.length > 0' :style="{'-webkit-overflow-scrolling': scrollMode}">
-				<mt-loadmore ref="loadmore" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" bottom-pull-text="加载更多">
+				<mt-loadmore ref="loadmore" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" bottom-pull-text="加载更多" top-loading-text="">
 	
 					<!--循环体-->
 					<div class="cell clear" v-for="(item,index) in dyList.data" :key="item.id">
@@ -88,8 +88,6 @@
 		searchIndex = urlStr.indexOf("?");
 		urlStr = urlStr.substring(searchIndex + 1); //取得所有参数  name=vaule&name=value
 		
-		alert(urlStr);
-		
 		if(urlStr.indexOf("&") > 0){
 			urlArr = urlStr.split("&"); //各个参数放到数组里[name=value,name=value]
 			for(var i = 0; i < urlArr.length; i++) {
@@ -112,7 +110,6 @@
 	}
 	var Request = new UrlSearch(); 
 	var userid = Request.userid;
-	alert(userid);
 	
 	//分辨设备
 	function phoneType() {
@@ -200,8 +197,11 @@
 						dyList.data = dyList.data.concat(res.body.data);
 					}
 
+					
 					if(res.body.nextPage == false) {
 						this.allLoaded = true;
+					}else{
+						this.allLoaded = false;
 					}
 
 					this.$nextTick(function() {
@@ -210,7 +210,7 @@
 						// 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好  
 						this.scrollMode = "touch";
 					});
-					alert(res.body.nextPage);
+//					alert(res.body.nextPage);
 				}).catch(function(error) {
 					console.log(error);
 				});
@@ -250,7 +250,6 @@
 				});
 			},
 			loadTop() {
-				this.isLoading = false;//禁止额外"加载中"字样
 				//组件刷新动作
 				this.getDataList(requestUrl, {
 					pagesize: 0,
@@ -281,7 +280,7 @@
 			},
 			appshowImg(imgArr, id, index) {
 				//请求 "观看数增加"接口
-				alert('查看图片,' + typeof imgArr + "," + imgArr);
+				//alert('查看图片,' + typeof imgArr + "," + imgArr);
 				this.watchCountHttp(addaudienceRequestUrl, {
 					'dynamicId': id
 				});
@@ -305,7 +304,7 @@
 
 			},
 			appshowVideo(video, id) {
-				alert('观看视频,' + typeof video + "," + video);
+				//alert('观看视频,' + typeof video + "," + video);
 				//请求 "观看数增加"接口
 				this.watchCountHttp(addaudienceRequestUrl, {
 					'dynamicId': id

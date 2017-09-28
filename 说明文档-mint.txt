@@ -17,13 +17,13 @@ vue 版本 @2.8.2
 
 6、npm install --save fastclick  --移动端点击过快 优化插件
 
-7、npm i vue-scroller -S  (可卸载)
+7、npm i vue-scroller -S  (已卸载)
 
 8、npm install vue-resource  支持jsonp请求
    
-   npm i -S vue-jsonp (可卸载)
+   npm i -S vue-jsonp (已卸载)
 
-9、npm install vuex --save  状态管理 (可卸载)
+9、npm install vuex --save  状态管理 (已卸载)
 
 10、npm install less less-loader --save-dev 
 ======================================================

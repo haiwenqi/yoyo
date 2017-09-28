@@ -3,7 +3,7 @@
 		<div>
 			<p class="loading" v-show="isLoading">加载中...</p> <!--isLoading == true 代表请求失败-->
 			<div v-if='dyList.data.length > 0' :style="{'-webkit-overflow-scrolling': scrollMode}">
-				<mt-loadmore ref="loadmore" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" bottom-pull-text="加载更多">
+				<mt-loadmore ref="loadmore" :top-method="loadTop" :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" :auto-fill="false" bottom-pull-text="加载更多" top-loading-text="">
 
 					<!--循环体-->
 					<div class="cell clear" v-for="(item,index) in dyList.data" :key="item.id">
@@ -125,6 +125,7 @@
 				type: 2
 			});
 		},
+		
 		filters:{
 			//格式化昵称 第一个**最后一个
 			formatenickname(nickname){
@@ -160,6 +161,7 @@
 					this.isLoading = false;
 					dyList.stamp = res.body.stamp;
 					dyList.nextPage = res.body.nextPage;
+					
 					//如果是初始化加载/刷新 res.body.data直接覆盖dyList.data 否则拼接
 					if(params.stamp == 0) {
 						dyList.data = res.body.data;
@@ -170,6 +172,8 @@
 					
 					if(res.body.nextPage == false) {
 						this.allLoaded = true;
+					}else{
+						this.allLoaded = false;
 					}
 
 					this.$nextTick(function() {
@@ -178,10 +182,38 @@
 						// 花了好久才解决这个问题，就是用这个函数，意思就是先设置属性为auto，正常滑动，加载完数据后改成弹性滑动，安卓没有这个问题，移动端弹性滑动体验会更好  
 						this.scrollMode = "touch";
 					});
-					alert(res.body.nextPage);
+					
 				}).catch(function(error) {
 					console.log(error);
 				});
+			},
+			loadTop() {
+				setTimeout(() => {
+					//组件刷新动作
+					this.getDataList(requestUrl, {
+						pagesize: 0,
+						stamp: 0,
+						type: 2
+					});
+
+					// 固定方法，查询完要调用一次，用于重新定位
+					this.$refs.loadmore.onTopLoaded();
+				}, 500);
+				
+			},
+			loadBottom() {
+				setTimeout(() => {
+					//下拉加载更多
+					this.getDataList(requestUrl, {
+						pagesize: 0,
+						stamp: dyList.stamp,
+						type: 2
+					});
+				
+					this.$refs.loadmore.onBottomLoaded();
+				},500)
+				
+
 			},
 			watchCountHttp(ipUrl, params) {
 				this.$http({
@@ -217,37 +249,9 @@
 					console.log("错误：" + error);
 				});
 			},
-			loadTop() {
-				this.isLoading = false;//禁止额外"加载中"字样
-				//组件刷新动作
-				this.getDataList(requestUrl, {
-					pagesize: 0,
-					stamp: 0,
-					type: 2
-				});
-
-				setTimeout(() => {
-					// 固定方法，查询完要调用一次，用于重新定位
-					this.$refs.loadmore.onTopLoaded();
-				}, 500);
-
-			},
-			loadBottom() {
-				//下拉加载更多
-				this.getDataList(requestUrl, {
-					pagesize: 0,
-					stamp: dyList.stamp,
-					type: 2
-				});
-
-				setTimeout(() => {
-					this.$refs.loadmore.onBottomLoaded();
-				}, 500);
-
-			},
 			appshowImg(imgArr, id, index) {
 				//请求 "观看数增加"接口
-				alert('查看图片,' + typeof imgArr + "," + imgArr);
+				//alert('查看图片,' + typeof imgArr + "," + imgArr);
 				this.watchCountHttp(addaudienceRequestUrl, {
 					'dynamicId': id
 				});
@@ -271,7 +275,7 @@
 
 			},
 			appshowVideo(video, id) {
-				alert('观看视频,' + typeof video + "," + video);
+				//alert('观看视频,' + typeof video + "," + video);
 				//请求 "观看数增加"接口
 				this.watchCountHttp(addaudienceRequestUrl, {
 					'dynamicId': id

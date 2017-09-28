@@ -92,9 +92,6 @@
 			MainBoxNewest,
 			MainBoxAttention
 		},
-		mounted(){
-			
-		},
 		methods: {
 			gotoTest(){
 				alert("跳转");

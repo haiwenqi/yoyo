@@ -33,12 +33,12 @@ textarea{resize:none;overflow:auto;outline:none;}
 .fr{float:right;}
 
 /*<!--修改placeholder颜色-->*/
-input::-webkit-input-placeholder{color:#AAAAAA;}
-input:focus::-webkit-input-placeholder{color:#EEEEEE;}
+/*input::-webkit-input-placeholder{color:#AAAAAA;}
+input:focus::-webkit-input-placeholder{color:#EEEEEE;}*/
 
 /*<!--禁止用户选中-->*/
 .user-select-none {
-  -webkit-touch-callout: none;
+  	-webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;

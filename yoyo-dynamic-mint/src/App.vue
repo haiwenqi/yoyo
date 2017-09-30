@@ -41,19 +41,6 @@
 	};
 	mobileType = phoneType();
 	
-
-	//从安卓端获取用户信息
-	function updateUserInfo(str) {
-		var res = JSON.parse(str);
-		var res_userInfo = JSON.parse(res.userinfo);
-	}
-	
-	//5、用户“返回” 传更改信息给客户端
-	var timeInMs = Date.now();
-	function requestGoBack() {
-		window.target.setResultData("用户请求回退，并更新数据"+timeInMs);
-		window.target.action(1);
-	}
 	
 	import MainBoxNewest from './components/MainBoxNewest'
 	import MainBoxAttention from './components/MainBoxAttention'
@@ -94,7 +81,6 @@
 		},
 		methods: {
 			gotoTest(){
-				alert("跳转");
 				window.target.gotoAppPage('WebSingleSaveFragment','{"strValue1":"http://192.168.20.31:20000/shark-miai-service/api/dynamic/test"}');
 			}
 			

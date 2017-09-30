@@ -84,20 +84,6 @@
 	var itemId = 0;
 	var ua = navigator.userAgent.toLowerCase();
 	var mobileType = '';
-	
-	//从安卓端获取用户信息
-	function updateUserInfo(str) {
-		var res = JSON.parse(str);
-		var res_userInfo = JSON.parse(res.userinfo);
-	}
-	//5、安卓端 用户“返回” 传更改信息给客户端
-	var timeInMs = Date.now();
-	function requestGoBack() {
-		window.target.setResultData("用户请求回退，并更新数据"+timeInMs);
-		window.target.action(1);
-	}
-	
-	
 	//分辨设备
 	function phoneType() {
 		if(/android (\d+\.\d+)/.test(ua)) {

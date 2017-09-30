@@ -17,7 +17,20 @@
 		<div id=app></div>
 		<script type="text/javascript">
 			var httpHeader = '$!{encrypt}';
+			
+			function updateUserInfo(str) {
+				var res = JSON.parse(str);
+				var res_userInfo = JSON.parse(res.userinfo);
+			}
+			
+			
+			function requestGoBack() {
+				var timeInMs = Date.now();
+				window.target.setResultData("用户请求回退，并更新数据"+timeInMs);
+				window.target.action(1);
+			}
 		</script>
+		
 		<script type='text/javascript' src="$!{Const.getCdn('/static/js/manifestMyDynamic.js')}"></script>
 		<script type='text/javascript' src="$!{Const.getCdn('/static/js/vendorMyDynamic.js')}"></script>
 		<script type='text/javascript' src="$!{Const.getCdn('/static/js/myDynamic.js')}"></script>
